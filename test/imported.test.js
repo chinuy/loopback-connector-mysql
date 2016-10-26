@@ -4,7 +4,8 @@
 // License text available at https://opensource.org/licenses/MIT
 
 'use strict';
-describe('mysql imported features', function() {
+
+describe.skip('mysql imported features', function() {
   before(function() {
     require('./init.js');
   });
