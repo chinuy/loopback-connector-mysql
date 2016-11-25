@@ -4,7 +4,6 @@
 // License text available at https://opensource.org/licenses/MIT
 
 'use strict';
-var semver = require('semver');
 var mysqlVersion;
 
 describe('mysql imported features', function() {
@@ -12,7 +11,7 @@ describe('mysql imported features', function() {
     require('./init.js');
   });
   var describeMysql57 = describe;
-  if (semver.gte(mysqlVersion, '5.7.0')) {
+  if (/^5\.7/.test(mysqlVersion)) {
     describeMysql57 = describe.skip;
   }
   require('loopback-datasource-juggler/test/common.batch.js');
