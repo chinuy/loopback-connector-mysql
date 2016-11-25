@@ -11,7 +11,7 @@ describe('mysql imported features', function() {
     require('./init.js');
   });
   var describeMysql57 = describe;
-  if (/^5\.7/.test(mysqlVersion)) {
+  if (/^5\.5/.test(mysqlVersion)) {
     describeMysql57 = describe.skip;
   }
   require('loopback-datasource-juggler/test/common.batch.js');
