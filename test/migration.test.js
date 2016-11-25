@@ -7,8 +7,6 @@
 var should = require('./init.js');
 var assert = require('assert');
 var Schema = require('loopback-datasource-juggler').Schema;
-// var semver = require('semver');
-// var isWin = /^win/.test(process.platform);
 
 var db, UserData, StringData, NumberData, DateData;
 var mysqlVersion;
@@ -248,12 +246,6 @@ describe('migrations', function() {
   });
 
   it('should autoupdate', function(done) {
-    // if (isWin) {
-    //   if (semver.gte(mysqlVersion, '5.5.0')) {
-    //     assert.ok(mysqlVersion, 'skipping decimal/number test on mysql 5.7');
-    //     return done();
-    //   }
-    // }
     var userExists = function(cb) {
       query('SELECT * FROM UserData', function(err, res) {
         cb(!err && res[0].email == 'test@example.com');
@@ -298,12 +290,6 @@ describe('migrations', function() {
   });
 
   it('should check actuality of dataSource', function(done) {
-    // if (isWin) {
-    //   if (semver.gte(mysqlVersion, '5.5.0')) {
-    //     assert.ok(mysqlVersion, 'skipping decimal/number test on mysql 5.7');
-    //     return done();
-    //   }
-    // }
     // 'drop column'
     UserData.dataSource.isActual(function(err, ok) {
       assert.ok(ok, 'dataSource is not actual (should be)');
@@ -322,12 +308,6 @@ describe('migrations', function() {
       assert.ok(mysqlVersion, 'skipping decimal/number test on mysql 5.7');
       return done();
     }
-    // if (isWin) {
-    //   if (semver.gte(mysqlVersion, '5.5.0')) {
-    //     assert.ok(mysqlVersion, 'skipping decimal/number test on mysql 5.7');
-    //     return done();
-    //   }
-    // }
 
     NumberData.create({number: 1.1234567, tinyInt: 123456, mediumInt: -1234567,
       floater: 123456789.1234567}, function(err, obj) {
