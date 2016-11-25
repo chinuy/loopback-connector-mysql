@@ -7,6 +7,9 @@
 var should = require('./init');
 var suite = require('loopback-datasource-juggler/test/persistence-hooks.suite.js');
 
-suite(global.getDataSource(), should, {
+suite(global.getDataSource(), {
+  before(function() {
+    require('./init.js');
+  });
   replaceOrCreateReportsNewInstance: true,
 });
