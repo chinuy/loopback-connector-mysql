@@ -18,4 +18,5 @@ describe('persistence-hooks suite test', function() {
   });
 
   require('loopback-datasource-juggler/test/persistence-hooks.suite.js');
+  replaceOrCreateReportsNewInstance: true,
 });
