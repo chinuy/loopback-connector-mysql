@@ -17,5 +17,5 @@ describe('persistence-hooks suite test', function() {
     require('./init.js');
   });
 
-require('loopback-datasource-juggler/test/persistence-hooks.suite.js');
+  require('loopback-datasource-juggler/test/persistence-hooks.suite.js');
 });
