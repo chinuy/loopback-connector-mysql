@@ -15,7 +15,7 @@ global.getConfig = function(options) {
   var dbConf = {
     host: process.env.MYSQL_HOST || config.host || 'localhost',
     port: process.env.MYSQL_PORT || config.port || 3306,
-    database: 'myapp_test',
+    database: process.env.DATABASE || config.DATABASE,
     username: process.env.MYSQL_USER || config.username,
     password: process.env.MYSQL_PASSWORD || config.password,
     createDatabase: true,
