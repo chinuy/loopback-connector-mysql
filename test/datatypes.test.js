@@ -3,10 +3,11 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 
+'use strict';
 require('./init.js');
 var assert = require('assert');
-// var semver = require('semver');
-// var isWin = /^win/.test(process.platform);
+var semver = require('semver');
+var isWin = /^win/.test(process.platform);
 
 var db, EnumModel, ANIMAL_ENUM;
 var mysqlVersion;
@@ -50,12 +51,14 @@ describe('MySQL specific datatypes', function() {
       assert.ok(mysqlVersion, 'skipping decimal/number test on mysql 5.7');
       return done();
     }
-    // if (isWin) {
-    //   if (semver.gte(mysqlVersion, '5.5.0')) {
-    //     assert.ok(mysqlVersion, 'skipping decimal/number test on mysql 5.7');
-    //     return done();
-    //   }
-    // }
+
+    if (isWin) {
+      if (semver.gte(mysqlVersion, '5.6.0')) {
+        assert.ok(mysqlVersion, 'skipping decimal/number/test on mysql 5.6');
+        return done();
+      }
+    }
+
     var em = EnumModel.create({animal: 'horse', condition: 'sleepy', mood: 'happy'}, function(err, obj) {
       assert.ok(!err);
       EnumModel.findById(obj.id, function(err, found) {

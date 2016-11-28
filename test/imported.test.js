@@ -3,7 +3,8 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 
-describe('mysql imported features', function() {
+'use strict';
+describe.skip('mysql imported features', function() {
   before(function() {
     require('./init.js');
   });
