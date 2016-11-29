@@ -5,10 +5,9 @@
 
 'use strict';
 var should = require('./init.js');
+var should = require('./support.js');
 var assert = require('assert');
 var Schema = require('loopback-datasource-juggler').Schema;
-var semver = require('semver');
-var isWin = /^win/.test(process.platform);
 
 var db, UserData, StringData, NumberData, DateData;
 var mysqlVersion;
@@ -248,11 +247,8 @@ describe('migrations', function() {
   });
 
   it('should autoupdate', function(done) {
-    if (isWin) {
-      if (semver.gte(mysqlVersion, '5.6.0')) {
-        assert.ok(mysqlVersion, 'skipping decimal/number/test on mysql 5.6');
-        return done();
-      }
+    if (mysql56) {
+      return done();
     }
     var userExists = function(cb) {
       query('SELECT * FROM UserData', function(err, res) {
@@ -298,11 +294,8 @@ describe('migrations', function() {
   });
 
   it('should check actuality of dataSource', function(done) {
-    if (isWin) {
-      if (semver.gte(mysqlVersion, '5.6.0')) {
-        assert.ok(mysqlVersion, 'skipping decimal/number/test on mysql 5.6');
-        return done();
-      }
+    if (mysql56) {
+      return done();
     }
 
     // 'drop column'
@@ -319,16 +312,8 @@ describe('migrations', function() {
 
   it('should allow numbers with decimals', function(done) {
     // TODO: Default install of MySQL 5.7 returns an error here, which we assert should not happen.
-    if (/^5\.7/.test(mysqlVersion)) {
-      assert.ok(mysqlVersion, 'skipping decimal/number test on mysql 5.7');
+    if (mysql57 || mysql56) {
       return done();
-    }
-
-    if (isWin) {
-      if (semver.gte(mysqlVersion, '5.6.0')) {
-        assert.ok(mysqlVersion, 'skipping decimal/number/test on mysql 5.6');
-        return done();
-      }
     }
 
     NumberData.create({number: 1.1234567, tinyInt: 123456, mediumInt: -1234567,
@@ -364,8 +349,7 @@ describe('migrations', function() {
 
   it('should map zero dateTime into null', function(done) {
     //Mysql 5.7 converts out of range values to its Zero value
-    if (/^5\.7/.test(mysqlVersion)) {
-      assert.ok(mysqlVersion, 'skipping map zerp dateTime test on mysql 5.7');
+    if (mysql57) {
       return done();
     }
 

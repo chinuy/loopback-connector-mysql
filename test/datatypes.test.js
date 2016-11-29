@@ -5,9 +5,8 @@
 
 'use strict';
 require('./init.js');
+require('./support.js');
 var assert = require('assert');
-var semver = require('semver');
-var isWin = /^win/.test(process.platform);
 
 var db, EnumModel, ANIMAL_ENUM;
 var mysqlVersion;
@@ -47,18 +46,9 @@ describe('MySQL specific datatypes', function() {
 
   it('should fail spectacularly with invalid enum values', function(done) {
     // TODO: with a default install of MySQL 5.7, these queries actually do fail and raise errors...
-    if (/^5\.7/.test(mysqlVersion)) {
-      assert.ok(mysqlVersion, 'skipping decimal/number test on mysql 5.7');
+    if (mysql57 || mysql56) {
       return done();
     }
-
-    if (isWin) {
-      if (semver.gte(mysqlVersion, '5.6.0')) {
-        assert.ok(mysqlVersion, 'skipping decimal/number/test on mysql 5.6');
-        return done();
-      }
-    }
-
     var em = EnumModel.create({animal: 'horse', condition: 'sleepy', mood: 'happy'}, function(err, obj) {
       assert.ok(!err);
       EnumModel.findById(obj.id, function(err, found) {

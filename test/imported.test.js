@@ -4,11 +4,12 @@
 // License text available at https://opensource.org/licenses/MIT
 
 'use strict';
-describe.skip('mysql imported features', function() {
-  before(function() {
-    require('./init.js');
-  });
 
+var describe = require('./describe');
+require('./init');
+
+/* eslint-env node, mocha */
+describe('mysql imported features', function() {
   require('loopback-datasource-juggler/test/common.batch.js');
   require('loopback-datasource-juggler/test/include.test.js');
 });
