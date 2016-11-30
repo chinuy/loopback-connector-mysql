@@ -112,7 +112,8 @@ describe('migrations', function() {
           // what kind of data is in it that MySQL has analyzed:
           // https://dev.mysql.com/doc/refman/5.5/en/show-index.html
           // Cardinality: /^5\.[567]/.test(mysqlVersion) ? 0 : null,
-          Sub_part: /^5\.7/.test(mysqlVersion) ? null : /^5\.5/.test(mysqlVersion) ? 255 : 333,
+          // Sub_part: /^5\.7/.test(mysqlVersion) ? 333 : /^5\.5/.test(mysqlVersion) ? 255 : 333,
+          Sub_part: null,
           Packed: null,
           Null: '',
           Index_type: 'BTREE',
@@ -128,7 +129,8 @@ describe('migrations', function() {
           // what kind of data is in it that MySQL has analyzed:
           // https://dev.mysql.com/doc/refman/5.5/en/show-index.html
           // Cardinality: /^5\.[567]/.test(mysqlVersion) ? 0 : null,
-          Sub_part: /^5\.7/.test(mysqlVersion) ? null : /^5\.5/.test(mysqlVersion) ? 255 : 333,
+          // Sub_part: /^5\.7/.test(mysqlVersion) ? null : /^5\.5/.test(mysqlVersion) ? 255 : 333,
+          Sub_part: null,
           Packed: null,
           Null: '',
           Index_type: 'BTREE',
@@ -412,7 +414,7 @@ function setup(done) {
     mediumString: {type: String, null: false, dataType: 'varchar', limit: 255},
     tinyText: {type: String, dataType: 'tinyText'},
     giantJSON: {type: Schema.JSON, dataType: 'longText'},
-    text: {type: Schema.Text, dataType: 'varchar', limit: 255},
+    text: {type: Schema.Text, dataType: 'varchar', limit: 1024},
   });
 
   NumberData = db.define('NumberData', {
