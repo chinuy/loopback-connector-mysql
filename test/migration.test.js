@@ -34,7 +34,7 @@ describe('migrations', function() {
           Extra: 'auto_increment'},
         email: {
           Field: 'email',
-          Type: 'varchar(512)',
+          Type: 'varchar(255)',
           Null: 'NO',
           Key: 'MUL',
           Default: null,
@@ -412,7 +412,7 @@ function setup(done) {
     mediumString: {type: String, null: false, dataType: 'varchar', limit: 255},
     tinyText: {type: String, dataType: 'tinyText'},
     giantJSON: {type: Schema.JSON, dataType: 'longText'},
-    text: {type: Schema.Text, dataType: 'varchar', limit: 1024},
+    text: {type: Schema.Text, dataType: 'varchar', limit: 255},
   });
 
   NumberData = db.define('NumberData', {
