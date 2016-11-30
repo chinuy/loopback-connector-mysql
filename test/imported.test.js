@@ -4,12 +4,16 @@
 // License text available at https://opensource.org/licenses/MIT
 
 'use strict';
-
-var describe = require('./describe');
-require('./init');
-
-/* eslint-env node, mocha */
 describe('mysql imported features', function() {
-  require('loopback-datasource-juggler/test/common.batch.js');
+  before(function() {
+    require('./init.js');
+  });
+
+  // require('loopback-datasource-juggler/test/common.batch.js');
+  require('loopback-datasource-juggler/test/datatype.test.js');
+  // require('loopback-datasource-juggler/test/basic-querying.test.js');
+  require('loopback-datasource-juggler/test/manipulation.test.js');
+  require('loopback-datasource-juggler/test/hooks.test.js');
+// require('loopback-datasource-juggler/test/relations.test.js');
   require('loopback-datasource-juggler/test/include.test.js');
 });
