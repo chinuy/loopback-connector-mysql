@@ -5,7 +5,7 @@
 
 'use strict';
 require('./init.js');
-require('./support.js');
+var support = require('./support.js');
 var assert = require('assert');
 
 var db, EnumModel, ANIMAL_ENUM;
@@ -46,7 +46,8 @@ describe('MySQL specific datatypes', function() {
 
   it('should fail spectacularly with invalid enum values', function(done) {
     // TODO: with a default install of MySQL 5.7, these queries actually do fail and raise errors...
-    if (mysql57 || mysql56) {
+    // TODO: With an install of MYSQL5.6 on windows, these queries `randomly` fail and raise errors
+    if (support.mysql57 || support.mysql56) {
       return done();
     }
     var em = EnumModel.create({animal: 'horse', condition: 'sleepy', mood: 'happy'}, function(err, obj) {

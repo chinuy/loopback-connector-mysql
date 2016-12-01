@@ -5,7 +5,7 @@
 
 'use strict';
 var should = require('./init.js');
-var should = require('./support.js');
+var support = require('./support.js');
 var assert = require('assert');
 var Schema = require('loopback-datasource-juggler').Schema;
 
@@ -112,7 +112,6 @@ describe('migrations', function() {
           // what kind of data is in it that MySQL has analyzed:
           // https://dev.mysql.com/doc/refman/5.5/en/show-index.html
           // Cardinality: /^5\.[567]/.test(mysqlVersion) ? 0 : null,
-          // Sub_part: /^5\.7/.test(mysqlVersion) ? 333 : /^5\.5/.test(mysqlVersion) ? 255 : 333,
           Sub_part: null,
           Packed: null,
           Null: '',
@@ -129,7 +128,6 @@ describe('migrations', function() {
           // what kind of data is in it that MySQL has analyzed:
           // https://dev.mysql.com/doc/refman/5.5/en/show-index.html
           // Cardinality: /^5\.[567]/.test(mysqlVersion) ? 0 : null,
-          // Sub_part: /^5\.7/.test(mysqlVersion) ? null : /^5\.5/.test(mysqlVersion) ? 255 : 333,
           Sub_part: null,
           Packed: null,
           Null: '',
@@ -249,7 +247,9 @@ describe('migrations', function() {
   });
 
   it('should autoupdate', function(done) {
-    if (mysql56) {
+    // With an install of MYSQL5.6 on windows, these queries `randomly` fail and raise errors
+    // especially with decimals, number and Date format.
+    if (support.mysql56) {
       return done();
     }
     var userExists = function(cb) {
@@ -296,7 +296,9 @@ describe('migrations', function() {
   });
 
   it('should check actuality of dataSource', function(done) {
-    if (mysql56) {
+    // With an install of MYSQL5.6 on windows, these queries `randomly` fail and raise errors
+    // with date, number and decimal format
+    if (support.mysql56) {
       return done();
     }
 
@@ -314,7 +316,9 @@ describe('migrations', function() {
 
   it('should allow numbers with decimals', function(done) {
     // TODO: Default install of MySQL 5.7 returns an error here, which we assert should not happen.
-    if (mysql57 || mysql56) {
+    // With an install of MYSQL5.6 on windows, these queries `randomly` fail and raise errors
+    // with date, number and decimal format
+    if (support.mysql57 || support.mysql56) {
       return done();
     }
 
@@ -351,7 +355,8 @@ describe('migrations', function() {
 
   it('should map zero dateTime into null', function(done) {
     //Mysql 5.7 converts out of range values to its Zero value
-    if (mysql57) {
+    if (/^5\.7/.test(mysqlVersion)) {
+      assert.ok(mysqlVersion, 'skipping map zerp dateTime test on mysql 5.7');
       return done();
     }
 
