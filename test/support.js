@@ -10,7 +10,7 @@ var isWin = /^win/.test(process.platform);
 
 // With a default install of MySQL 5.7, these queries actually do fail and raise errors...
 // with date, number and decimal format
- exports.mysql57 = function(mysqlVersion) {
+exports.mysql57 = function(mysqlVersion) {
   if (/^5\.7/.test(mysqlVersion)) {
     assert.ok(mysqlVersion, 'skipping decimal/number test on mysql 5.7');
   }
