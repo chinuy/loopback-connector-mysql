@@ -81,10 +81,9 @@ describe('mysql', function() {
     });
   });
 
-  it('return null if JSON parsing fails', function(done) {
+  it('returns null if JSON parsing fails', function(done) {
     Post.create({title: 'a', history: {a: 1, b: 'b'}}, function(err, post) {
       if (err) return done(err);
-      should.not.exist(err);
       
       // break the content
       var statement = 'UPDATE ' + global.getConfig().database + '.PostWithDefaultId SET history = \'{corrupted,\' where title=\'a\'';
